@@ -1,28 +1,5 @@
-import { useStore } from '@/util/store';
-import Link from 'next/link';
+import { Start } from '@/components/generate/Start';
 
-export default function Start() {
-  const { testData, setTestData, resetData } = useStore();
-
-  console.log(testData);
-
-  return (
-    <>
-      <Link href='/generate/select'>start</Link>
-      <button
-        onClick={() => {
-          setTestData(testData + 1);
-        }}
-      >
-        up
-      </button>
-      <button
-        onClick={() => {
-          resetData();
-        }}
-      >
-        reset
-      </button>
-    </>
-  );
+export default function Page() {
+  return <Start></Start>;
 }

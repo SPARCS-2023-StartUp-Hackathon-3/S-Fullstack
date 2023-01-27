@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useStore } from '@/util/store';
 
-export default function Select() {
+export default function Page() {
   const { testData, setTestData, resetData } = useStore();
 
   console.log(testData);
