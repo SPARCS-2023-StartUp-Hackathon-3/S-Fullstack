@@ -63,7 +63,7 @@ export default async function handler(
           (Number(page) - 1) * 10 +
           ', 10;';
 
-        const param = [];
+        const param: any[] = [];
 
         if (mode === 'user_search') {
           param.push(user_id);
