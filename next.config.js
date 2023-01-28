@@ -5,7 +5,11 @@ const nextConfig = {
     emotion: true,
   },
   images: {
-    domains: ['melebucket.s3.ap-northeast-2.amazonaws.com'],
+    domains: [
+      'melebucket.s3.ap-northeast-2.amazonaws.com',
+      'img.danawa.com',
+      'upload.wikimedia.org',
+    ],
   },
 };
 
