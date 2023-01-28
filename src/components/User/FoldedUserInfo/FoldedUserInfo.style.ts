@@ -8,7 +8,7 @@ export const FoldedUserInfoWrapper = styled.div`
   vertical-align: middle;
   width: 100%;
   height: 56px;
-  padding: 16px;
+  padding: 32px 0px 16px 0px;
 `;
 
 export const AvatarFold = styled.div`

@@ -7,7 +7,7 @@ export const SignInWrapper = styled.div`
   justify-content: center;
   width: 100%;
   margin: 0px;
-  padding: 0px;
+  padding: 20px;
   height: 100vh;
   
   background-color: #FFFFFF;
