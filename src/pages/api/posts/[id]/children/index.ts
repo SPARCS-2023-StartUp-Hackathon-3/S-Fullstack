@@ -14,9 +14,8 @@ export default async function handler(
           'SELECT * FROM `post` WHERE `parent_id`= ? ORDER BY `id` DESC;',
           [id]
         );
-        console.log(data[0]);
 
-        return res.status(200).json({});
+        return res.status(200).json(data);
       } catch (e: any) {
         console.log(e);
         return res.status(500).json({ message: e.message });
