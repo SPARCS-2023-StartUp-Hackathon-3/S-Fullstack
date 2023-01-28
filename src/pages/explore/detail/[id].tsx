@@ -52,7 +52,7 @@ export default function Detail() {
       <div style={{ height: '56px' }} />
       <Post post={post} user={post.user} like={like} />
       {post.parent && <Parent post={post.parent} />}
-      <Child postList={child} />
+      {child.length ? <Child postList={child} /> : <></>}
       <div style={{ height: 120 }} />
       <BottomTabsNavigator />
     </>
