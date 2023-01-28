@@ -15,6 +15,26 @@ interface IGenerateStore {
   resetAll: () => void;
 }
 
+interface IUserInfoStore {
+  username: string;
+  setUsername: (data: string) => void;
+}
+
+export const useUserInfoStore = create(
+  persist<IUserInfoStore>(
+    (set) => ({
+      username: '',
+      setUsername: (data) => {
+        set((state) => ({ ...state, username: data }));
+      }
+    }),
+    {
+      name: 'user-info-store',
+    }
+  )
+);
+
+
 export const useGenerateStore = create(
   persist<IGenerateStore>(
     (set) => ({
