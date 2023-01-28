@@ -1,7 +1,7 @@
 import { useUserInfoStore } from '@/util/store';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Input, SignInButton, SignInWrapper } from './SignIn.styles';
 import Lottie from 'lottie-react';
 import * as animationData from './animationData.json';
@@ -12,6 +12,7 @@ const SignIn = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const { setUsername, setId } = useUserInfoStore();
+  const [isClicked, setIsClicked] = useState(false);
 
   const signUpRequest = async () => {
     return fetch(`/api/users`, {
@@ -35,6 +36,9 @@ const SignIn = () => {
 
   const singInHandler = () => {
     if (!usernameRef.current || !passwordRef.current) return;
+    console.log('hi');
+
+    setIsClicked(true);
     mutate();
   };
 
@@ -48,7 +52,9 @@ const SignIn = () => {
       >
         <Input placeholder='Username' ref={usernameRef} />
         <Input placeholder='Password' type='password' ref={passwordRef} />
-        <SignInButton onClick={singInHandler}>Sign In</SignInButton>
+        <SignInButton disabled={isClicked} onClick={singInHandler}>
+          Sign In
+        </SignInButton>
       </motion.div>
     </SignInWrapper>
   );
