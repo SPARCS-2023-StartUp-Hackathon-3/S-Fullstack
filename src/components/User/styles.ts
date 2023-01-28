@@ -7,6 +7,8 @@ export const UserWrapper = styled.div`
   width: 100%;
   margin: 0px;
   padding: 0px;
+  position: fixed;
+  background-color: #FFFFFF;
 `;
 
 export const FoldedUserInfo = styled.div`
