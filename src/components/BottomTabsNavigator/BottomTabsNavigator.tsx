@@ -30,7 +30,7 @@ const PlusContainer = styled.div`
   height: 96px;
   border-radius: 50%;
   position: relative;
-  top: -50%;
+  top: -35%;
   background-color: #fff;
   padding: 12px;
   display: flex;
@@ -80,7 +80,7 @@ const Closet = styled(MdOutlineCheckroom)`
 `;
 
 export function BottomTabsNavigator() {
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
   return (
     <Container>
       <Link href={'/explore'}>
@@ -89,7 +89,7 @@ export function BottomTabsNavigator() {
         />
       </Link>
       <PlusContainer>
-        <PlusIconContainer>
+        <PlusIconContainer onClick={() => push('/generate/start')}>
           <PlusIcon color='#fff' />
         </PlusIconContainer>
       </PlusContainer>
