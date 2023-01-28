@@ -93,7 +93,7 @@ export function BottomTabsNavigator() {
           <PlusIcon color='#fff' />
         </PlusIconContainer>
       </PlusContainer>
-      <Link href={'/explore'}>
+      <Link href={'/closet'}>
         <Closet
           color={pathname.indexOf('/closet') == 0 ? '#313851' : '#A9AFCD'}
         />
