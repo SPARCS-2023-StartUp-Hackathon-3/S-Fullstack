@@ -1,6 +1,7 @@
 import { BottomTabsNavigator } from '@/components/BottomTabsNavigator';
 import ClothesListContainer from '@/components/explore/ClothesListContainer';
 import { TopBar } from '@/components/explore/TopBar';
+import { ForceCsr } from '@/components/ForceCsr';
 import {
   useExploreKeywordStore,
   useExploreListStore,
@@ -23,13 +24,13 @@ export default function Explore() {
   };
 
   return (
-    <>
+    <ForceCsr>
       <TopBar onEndEditing={onEndEditing} onClose={onClose} />
       <div style={{ height: '56px' }} />
       <ClothesListContainer bottom={bottom} />
       <div style={{ height: '120px' }} />
       <div ref={bottom} />
       <BottomTabsNavigator />
-    </>
+    </ForceCsr>
   );
 }

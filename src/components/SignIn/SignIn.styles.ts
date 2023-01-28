@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const SignInWrapper = styled.div`
   display: flex;
@@ -9,25 +9,25 @@ export const SignInWrapper = styled.div`
   margin: 0px;
   padding: 20px;
   height: 100vh;
-  
-  background-color: #FFFFFF;
+
+  background-color: #ffffff;
 `;
 
 export const Input = styled.input`
   max-width: 400px;
   width: 100%;
   height: 44px;
-  padding : 10px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
-  margin: 20px;
-  border: 1px solid #C8C6C8;
+  margin: 20px 0;
+  border: 1px solid #c8c6c8;
   border-radius: 4px;
   ::placeholder {
-    color: #C8C6C8;
+    color: #c8c6c8;
   }
 `;
 
@@ -38,16 +38,16 @@ export const SignInButton = styled.button`
   align-items: center;
   border: none;
   gap: 10px;
-  margin: 20px;
+  margin: 20px 0;
   font-size: 20px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 100%;
   max-width: 400px;
   height: 60px;
 
   /* S 100 */
 
-  background: #37258E;
+  background: #37258e;
   border-radius: 14px;
 `;

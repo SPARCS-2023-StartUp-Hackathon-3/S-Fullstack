@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+import Image from 'next/image';
 import { MdClose, MdKeyboardArrowLeft } from 'react-icons/md';
+import { ISelectImageProps } from './Select.types';
 
 export const SelectWrapper = styled.section`
   display: flex;
@@ -35,6 +37,25 @@ export const CloseButton = styled(MdClose)`
   cursor: pointer;
 `;
 
+export const SelectBox = styled.div`
+  width: 335px;
+  height: 519px;
+  margin: 43px 0 25px;
+`;
+
+export const ImageBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  border-radius: 14px;
+`;
+
+export const SelectImage = styled(Image)<ISelectImageProps>`
+  outline: ${({ selected }) =>
+    selected ? '3px solid #9747FF' : '1px solid #DEDCDF'};
+  border-radius: 14px;
+`;
+
 export const ButtonBox = styled.div`
   display: flex;
   align-items: center;
@@ -52,6 +73,12 @@ export const RegenerateButton = styled.button`
   font-size: 20px;
   line-height: 22px;
   color: #111a30;
+
+  &:disabled {
+    border: none;
+    background: #c8c6c8;
+    color: #9a9b9d;
+  }
 `;
 
 export const SelectButton = styled.button`

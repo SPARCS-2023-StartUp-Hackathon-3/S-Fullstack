@@ -1,5 +1,10 @@
+import { ForceCsr } from '@/components/ForceCsr';
 import { Confirm } from '@/components/generate/Confirm';
 
 export default function Page() {
-  return <Confirm></Confirm>;
+  return (
+    <ForceCsr>
+      <Confirm></Confirm>
+    </ForceCsr>
+  );
 }

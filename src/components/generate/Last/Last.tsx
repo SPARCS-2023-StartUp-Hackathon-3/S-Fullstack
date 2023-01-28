@@ -1,5 +1,7 @@
 import { AWS_ADDRESS } from '@/const';
-import { useGenerateStore } from '@/util/store';
+import IPostPostReqDto from '@/types/PostPost.types';
+import { useGenerateStore, useUserInfoStore } from '@/util/store';
+import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -13,30 +15,50 @@ import {
   Form,
   PostButton,
 } from './Last.styles';
-import { ILastFormValue } from './Last.tyles';
+import { ILastFormValue } from './Last.types';
 
 export function Last() {
   const router = useRouter();
 
-  const { title, imageUrl, isNew } = useGenerateStore();
+  const { id } = useUserInfoStore();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, isDirty, isValid },
-  } = useForm<ILastFormValue>();
+  const { title, color, desc, imageUrl, parentId } = useGenerateStore();
 
-  const onSubmitHandler: SubmitHandler<ILastFormValue> = (data) => {
-    console.log(data.caption);
+  const postHandler = async (data: IPostPostReqDto) => {
+    return fetch(`/api/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
   };
 
-  const buttonDisabled = !isDirty || !isValid || isSubmitting;
+  const { mutate } = useMutation(postHandler, {
+    onSuccess: (data) => {
+      router.push(`/explore/detail/${data.id}`);
+    },
+  });
+
+  const { register, handleSubmit } = useForm<ILastFormValue>();
+
+  const onSubmitHandler: SubmitHandler<ILastFormValue> = (data) => {
+    mutate({
+      imageUrl,
+      title,
+      color,
+      desc,
+      parentId,
+      caption: data.caption,
+      userId: id,
+    });
+  };
 
   return (
     <LastWarpper>
       <Header>
         <PrevButton onClick={router.back} />
-        {isNew ? 'Generate' : 'Redesign'}
+        {parentId ? 'Redesign' : 'Generate'}
         <CloseButton onClick={() => router.push('/')} />
       </Header>
       <ImageWrapper>
@@ -52,11 +74,9 @@ export function Last() {
         <textarea
           id='caption'
           placeholder='Write a catpion'
-          {...register('caption', {
-            required: true,
-          })}
+          {...register('caption')}
         />
-        <PostButton disabled={buttonDisabled}>Post</PostButton>
+        <PostButton>Post</PostButton>
       </Form>
     </LastWarpper>
   );

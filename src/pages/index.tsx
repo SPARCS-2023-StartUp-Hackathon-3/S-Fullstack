@@ -6,7 +6,7 @@ export default function Page() {
   const { username } = useUserInfoStore();
   const router = useRouter();
 
-  if (username !== '') router.replace('/explore');
+  if (username) router.replace('/explore');
 
   return <SignIn />;
 }

@@ -1,8 +1,9 @@
 import { AWS_ADDRESS } from '@/const';
-import { useUserInfoStore } from '@/util/store';
+import { useGenerateStore, useUserInfoStore } from '@/util/store';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import Image from 'next/image';
+import { Router, useRouter } from 'next/router';
 import { useState } from 'react';
 import { MdFavorite, MdOutlineFavoriteBorder, MdBrush } from 'react-icons/md';
 
@@ -181,6 +182,9 @@ export default function Post({
   const [liked, setLiked] = useState(like);
   const [loading, setLoading] = useState(false);
   const { id: userId } = useUserInfoStore();
+  const route = useRouter();
+  const { setTitle, setColor, setDesc, setImageUrl, setParentId } =
+    useGenerateStore();
 
   const onClickLike = () => {
     if (loading) return;
@@ -190,10 +194,28 @@ export default function Post({
       .post('/api/posts/' + post.id + '/like', {
         userId: userId,
       })
-      .then((res) => {
+      .then(() => {
+        if (liked) {
+          post.like_count--;
+        } else {
+          post.like_count++;
+        }
         setLiked((prev) => !prev);
         setLoading(false);
       });
+  };
+
+  const redesignHandler = () => {
+    setTitle(post.title);
+    setColor(post.color);
+    setDesc(post.desc);
+    setParentId(post.id);
+    if (post.image_url) {
+      setImageUrl(post.image_url);
+    } else if (post.imageUrl) {
+      setImageUrl(post.imageUrl);
+    }
+    route.push('/generate/start');
   };
 
   return (
@@ -228,7 +250,7 @@ export default function Post({
         </LikeButton>
         <RedsignButton>
           <BrushIcon color='#fff' />
-          <RedesignText>Redesign</RedesignText>
+          <RedesignText onClick={redesignHandler}>Redesign</RedesignText>
         </RedsignButton>
       </ButtonsContainer>
       <HorizontalLine />

@@ -33,7 +33,6 @@ export const ImageWrapper = styled.div`
   margin-top: 32px;
   width: 155px;
   height: 155px;
-  background: #949494;
 
   img {
     border-radius: 14px;

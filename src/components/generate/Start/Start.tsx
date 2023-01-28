@@ -28,12 +28,13 @@ export function Start() {
     setTitle,
     setColor,
     setDesc,
+    resetAll,
   } = useGenerateStore();
 
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, isDirty, isValid },
+    formState: { isSubmitting, isValid },
   } = useForm<IStartFormValue>();
 
   const onSubmitHandler: SubmitHandler<IStartFormValue> = (data) => {
@@ -41,24 +42,36 @@ export function Start() {
     setColor(data.color);
     setDesc(data.desc);
     if (parentId) {
-      router.push('/generate/select');
-    } else {
       router.push('/generate/confirm');
+    } else {
+      router.push('/generate/select');
     }
   };
 
-  const buttonDisabled = parentId ? !isDirty || !isValid || isSubmitting : true;
+  const buttonDisabled = !isValid || isSubmitting;
 
   return (
     <StartWrapper>
       <Header>
-        {parentId ? 'Generate' : 'Redesign'}
-        <CloseButton onClick={() => router.push('/')} />
+        {parentId ? 'Redesign' : 'Generate'}
+        <CloseButton
+          onClick={() => {
+            resetAll();
+            router.push('/');
+          }}
+        />
       </Header>
       <ImageWrapper>
-        {imageUrl && (
+        {parentId ? (
           <Image
             src={`${AWS_ADDRESS}/${imageUrl}`}
+            alt='Clothes image'
+            width={155}
+            height={155}
+          />
+        ) : (
+          <Image
+            src={`/default_clothes.svg`}
             alt='Clothes image'
             width={155}
             height={155}

@@ -54,14 +54,11 @@ export default function ClothesListContainer({
 
     if (keyword && keyword != '') Object.assign(params, { search: keyword });
 
-    console.log(params, keyword);
-
     axios
       .get('/api/posts', {
         params: params,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.length > 0) {
           setClothes(clothes.concat(...res.data));
           page.current += 1;

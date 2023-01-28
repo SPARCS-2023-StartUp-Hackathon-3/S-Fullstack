@@ -11,9 +11,9 @@ interface IGenerateStore {
   setTitle: (data: string) => void;
   setColor: (data: string) => void;
   setDesc: (data: string) => void;
-  setImageUrl: (data: string) => void;
+  setImageUrl: (data?: string) => void;
   setSelectImageUrls: (data: Array<string> | undefined) => void;
-  setParentId: (data: boolean) => void;
+  setParentId: (data: number) => void;
   resetAll: () => void;
 }
 
@@ -67,7 +67,7 @@ export const useGenerateStore = create(
         set((state) => ({ ...state, selectImageUrls: data }));
       },
       setParentId: (data) => {
-        set((state) => ({ ...state, isNew: data }));
+        set((state) => ({ ...state, parentId: data }));
       },
       resetAll: () => {
         set({

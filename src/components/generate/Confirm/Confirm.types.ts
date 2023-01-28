@@ -1,3 +1,3 @@
 export interface ICompleteButtonProps {
-  parentId: number;
+  parentId?: number;
 }

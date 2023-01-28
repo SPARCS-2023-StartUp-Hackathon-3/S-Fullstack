@@ -1,6 +1,6 @@
 import { AI_ADDRESS, AWS_ADDRESS } from '@/const';
 import { useGenerateStore } from '@/util/store';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -18,32 +18,53 @@ import {
 export function Confirm() {
   const router = useRouter();
 
-  const { title, color, desc, imageUrl, parentId } = useGenerateStore();
+  const { title, color, desc, imageUrl, setImageUrl, parentId } =
+    useGenerateStore();
 
-  // todo: 보내는 데이터 확인
-  const editRequest = async () => {
-    return fetch(`${AI_ADDRESS}/v2/generate`, {
+  const RegenerateHandler = () => {
+    fetch(`/api/posts/${parentId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        mutate(data);
+      });
+  };
+
+  const editRequest = async (data) => {
+    return fetch(`${AI_ADDRESS}/v2/edit`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        title,
-        color,
-        desc,
+        image: data.image_url,
+        source: {
+          title: data.title,
+          color: data.color,
+          desc: data.desc,
+        },
+        target: {
+          title,
+          color,
+          desc,
+        },
       }),
     }).then((res) => res.json());
   };
 
   const { mutate, isSuccess } = useMutation(editRequest, {
     onSuccess: (data) => {
-      console.log(data);
+      setImageUrl(data.images[0]);
     },
   });
 
   useEffect(() => {
-    if (!parentId) {
-      // mutate();
+    if (parentId) {
+      // setImageUrl(undefined); // todo: 지원님께 여쭤보기
+      // fetch(`/api/posts/${parentId}`)
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     mutate(data);
+      //   });
     }
   }, [mutate]);
 
@@ -51,21 +72,31 @@ export function Confirm() {
     <ConfirmWrapper>
       <Header>
         <PrevButton onClick={router.back} />
-        {parentId ? 'Generate' : 'Redesign'}
+        {parentId ? 'Redesign' : 'Generate'}
         <CloseButton onClick={() => router.push('/')} />
       </Header>
       <ImageWrapper>
-        <Image
-          src={`${AWS_ADDRESS}/${imageUrl}`}
-          alt='Clothes image'
-          width={267}
-          height={267}
-        />
+        {isSuccess ? (
+          <Image
+            src={`${AWS_ADDRESS}/${imageUrl}`}
+            alt='Clothes image'
+            width={267}
+            height={267}
+          />
+        ) : (
+          <>loading</>
+        )}
       </ImageWrapper>
       <ButtonWrapper>
-        {!parentId && <RegenerateButton>Regenerate</RegenerateButton>}
+        {parentId ? (
+          <RegenerateButton onClick={RegenerateHandler}>
+            Regenerate
+          </RegenerateButton>
+        ) : (
+          <></>
+        )}
         <CompleteButton
-          parentId={parentId}
+          parentId={parentId ? parentId : undefined}
           onClick={() => router.push('/generate/last')}
         >
           Complete

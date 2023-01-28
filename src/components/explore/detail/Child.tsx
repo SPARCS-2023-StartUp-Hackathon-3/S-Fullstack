@@ -17,7 +17,6 @@ const Text = styled.div`
 `;
 
 export default function Child({ postList }: { postList: Post[] }) {
-  console.log(postList);
   return (
     <Container>
       <Text>Child</Text>

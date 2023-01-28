@@ -4,19 +4,31 @@ import {
   ButtonBox,
   CloseButton,
   Header,
+  ImageBox,
   PrevButton,
   RegenerateButton,
+  SelectBox,
   SelectButton,
+  SelectImage,
   SelectWrapper,
 } from './Select.styles';
 import { useMutation } from '@tanstack/react-query';
-import { AI_ADDRESS } from '@/const';
+import { AI_ADDRESS, AWS_ADDRESS } from '@/const';
 import { useEffect } from 'react';
 
 export function Select() {
   const router = useRouter();
 
-  const { title, color, desc } = useGenerateStore();
+  const {
+    title,
+    color,
+    desc,
+    imageUrl,
+    selectImageUrls,
+    setSelectImageUrls,
+    setImageUrl,
+    resetAll,
+  } = useGenerateStore();
 
   const generateRequest = async () => {
     return fetch(`${AI_ADDRESS}/v2/generate`, {
@@ -32,34 +44,67 @@ export function Select() {
     }).then((res) => res.json());
   };
 
-  const { mutate, isSuccess } = useMutation(generateRequest, {
+  const { mutate } = useMutation(generateRequest, {
     onSuccess: (data) => {
-      console.log(data);
+      setSelectImageUrls(data.images);
     },
   });
 
   useEffect(() => {
-    // mutate();
-  }, [mutate]);
+    if (!selectImageUrls) {
+      mutate();
+    }
+  }, []);
 
   return (
     <SelectWrapper>
       <Header>
-        <PrevButton onClick={router.back} />
+        <PrevButton
+          onClick={() => {
+            setSelectImageUrls(undefined);
+            router.back();
+          }}
+        />
         Generate
-        <CloseButton onClick={() => router.push('/')} />
+        <CloseButton
+          onClick={() => {
+            resetAll();
+            router.push('/');
+          }}
+        />
       </Header>
-      {/* todo: 6가지 선택창 */}
+      <SelectBox>
+        {selectImageUrls ? (
+          <ImageBox>
+            {selectImageUrls.map((url, idx) => (
+              <SelectImage
+                key={idx}
+                src={`${AWS_ADDRESS}/${url}`}
+                alt=''
+                width={155}
+                height={155}
+                onClick={() => setImageUrl(url)}
+                selected={url === imageUrl}
+              />
+            ))}
+          </ImageBox>
+        ) : (
+          <>loading</>
+        )}
+      </SelectBox>
       <ButtonBox>
         <RegenerateButton
+          disabled={selectImageUrls === undefined}
           onClick={() => {
+            setSelectImageUrls(undefined);
+            setImageUrl(undefined);
             mutate();
           }}
         >
           Regenerate
         </RegenerateButton>
         <SelectButton
-          disabled={false}
+          disabled={imageUrl === undefined}
           onClick={() => router.push('/generate/confirm')}
         >
           Select

@@ -45,7 +45,7 @@ const PlusContainer = styled.div`
     display: block;
     position: absolute;
     background-color: #fff;
-    transform: translateY(50%);
+    transform: translateY(38%);
   }
 `;
 

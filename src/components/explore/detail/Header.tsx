@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { MdArrowBackIos } from 'react-icons/md';
 
 const Container = styled.div`
@@ -22,9 +23,11 @@ const Icon = styled(MdArrowBackIos)`
 `;
 
 export default function DetailPageHeader() {
+  const router = useRouter();
+
   return (
     <Container>
-      <Icon color='#050505' />
+      <Icon onClick={router.back} color='#050505' />
     </Container>
   );
 }

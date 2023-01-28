@@ -6,6 +6,7 @@ import Post, { Post as PostType } from '@/components/explore/detail/Post';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { useGenerateStore, useUserInfoStore } from '@/util/store';
 
 type PostRes = PostType & {
   parent: {
@@ -29,17 +30,21 @@ export default function Detail() {
   const [post, setPost] = useState<PostRes>();
   const [child, setChild] = useState<PostType[]>([]);
   const [like, setLike] = useState<boolean>();
+  const { id: userId } = useUserInfoStore();
+
+  const { resetAll } = useGenerateStore();
 
   const { id } = useRouter().query;
 
   useEffect(() => {
+    resetAll();
     if (id) {
       axios.get('/api/posts/' + id).then((res) => setPost(res.data));
       axios
         .get('/api/posts/' + id + '/children')
         .then((res) => setChild(res.data));
       axios
-        .get('/api/posts/' + id + '/like')
+        .get('/api/posts/' + id + '/like?user_id=' + userId)
         .then((res) => setLike(res.data.isLiked));
     }
   }, [id]);
@@ -58,15 +63,3 @@ export default function Detail() {
     </>
   );
 }
-
-const Tmp = {
-  id: 1,
-  imageUrl:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Black_colour.jpg/640px-Black_colour.jpg',
-  title: 'fancy gray hoodie ',
-  color: 'string',
-  desc: 'string',
-  caption:
-    'Comment (fancy gray hoodie protects you from korea cold winter\nComment (fancy gray hoodie protects you from korea cold winterComment (fancy gray hoodie protects you from korea cold winter',
-  like_count: 1,
-};

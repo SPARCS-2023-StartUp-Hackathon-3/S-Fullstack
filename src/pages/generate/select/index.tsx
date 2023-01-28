@@ -1,5 +1,10 @@
+import { ForceCsr } from '@/components/ForceCsr';
 import { Select } from '@/components/generate/Select';
 
 export default function Page() {
-  return <Select></Select>;
+  return (
+    <ForceCsr>
+      <Select></Select>
+    </ForceCsr>
+  );
 }
