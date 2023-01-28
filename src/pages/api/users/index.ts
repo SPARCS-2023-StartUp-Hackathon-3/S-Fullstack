@@ -17,6 +17,16 @@ export default async function handler(
 
         return res.status(200).json({ id: data.insertId, name });
       } catch (e: any) {
+        if (e.code === 'ER_DUP_ENTRY') {
+          const { name } = req.body;
+
+          const [data] = await db.query(
+            'SELECT `id` FROM `user` WHERE `name` = ?;',
+            [name]
+          );
+
+          return res.status(200).json({ id: data[0].id, name });
+        }
         console.log(e);
         return res.status(500).json({ message: e.message });
       }

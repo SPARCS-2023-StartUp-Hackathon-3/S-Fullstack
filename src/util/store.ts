@@ -5,28 +5,36 @@ interface IGenerateStore {
   title: string;
   color: string;
   desc: string;
-  imageUrl: string;
-  parentId: number;
+  imageUrl?: string;
+  selectImageUrls?: Array<string>;
+  parentId?: number;
   setTitle: (data: string) => void;
   setColor: (data: string) => void;
   setDesc: (data: string) => void;
-  setImg: (data: string) => void;
+  setImageUrl: (data: string) => void;
+  setSelectImageUrls: (data: Array<string> | undefined) => void;
   setParentId: (data: boolean) => void;
   resetAll: () => void;
 }
 
 interface IUserInfoStore {
+  id: number;
   username: string;
+  setId: (data: number) => void;
   setUsername: (data: string) => void;
 }
 
 export const useUserInfoStore = create(
   persist<IUserInfoStore>(
     (set) => ({
+      id: 0,
       username: '',
+      setId: (data) => {
+        set((state) => ({ ...state, id: data }));
+      },
       setUsername: (data) => {
         set((state) => ({ ...state, username: data }));
-      }
+      },
     }),
     {
       name: 'user-info-store',
@@ -34,15 +42,15 @@ export const useUserInfoStore = create(
   )
 );
 
-
 export const useGenerateStore = create(
   persist<IGenerateStore>(
     (set) => ({
       title: '',
       color: '',
       desc: '',
-      imageUrl: '',
-      parentId: 0,
+      imageUrl: undefined,
+      selectImageUrls: undefined,
+      parentId: undefined,
       setTitle: (data) => {
         set((state) => ({ ...state, title: data }));
       },
@@ -52,14 +60,24 @@ export const useGenerateStore = create(
       setDesc: (data) => {
         set((state) => ({ ...state, desc: data }));
       },
-      setImg: (data) => {
+      setImageUrl: (data) => {
         set((state) => ({ ...state, imageUrl: data }));
+      },
+      setSelectImageUrls: (data) => {
+        set((state) => ({ ...state, selectImageUrls: data }));
       },
       setParentId: (data) => {
         set((state) => ({ ...state, isNew: data }));
       },
       resetAll: () => {
-        set({ title: '', color: '', desc: '', imageUrl: '', parentId: 0 });
+        set({
+          title: '',
+          color: '',
+          desc: '',
+          imageUrl: undefined,
+          selectImageUrls: undefined,
+          parentId: undefined,
+        });
       },
     }),
     {
