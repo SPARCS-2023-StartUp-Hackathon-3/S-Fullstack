@@ -21,7 +21,7 @@ export default async function handler(
           total += item.like_count;
         }
 
-        return res.status(200).json({ likeCound: total });
+        return res.status(200).json({ likeCount: total });
       } catch (e) {
         console.log(e);
         return res.status(500);
