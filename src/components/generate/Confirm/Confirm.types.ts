@@ -1,3 +1,3 @@
 export interface ICompleteButtonProps {
-  isNew: boolean;
+  parentId: number;
 }

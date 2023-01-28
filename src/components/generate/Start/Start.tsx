@@ -19,8 +19,16 @@ import { IStartFormValue } from './Start.types';
 export function Start() {
   const router = useRouter();
 
-  const { title, color, desc, imageUrl, isNew, setTitle, setColor, setDesc } =
-    useGenerateStore();
+  const {
+    title,
+    color,
+    desc,
+    imageUrl,
+    parentId,
+    setTitle,
+    setColor,
+    setDesc,
+  } = useGenerateStore();
 
   const {
     register,
@@ -32,19 +40,19 @@ export function Start() {
     setTitle(data.title);
     setColor(data.color);
     setDesc(data.desc);
-    if (isNew) {
+    if (parentId) {
       router.push('/generate/select');
     } else {
       router.push('/generate/confirm');
     }
   };
 
-  const buttonDisabled = isNew ? !isDirty || !isValid || isSubmitting : true;
+  const buttonDisabled = parentId ? !isDirty || !isValid || isSubmitting : true;
 
   return (
     <StartWrapper>
       <Header>
-        {isNew ? 'Generate' : 'Redesign'}
+        {parentId ? 'Generate' : 'Redesign'}
         <CloseButton onClick={() => router.push('/')} />
       </Header>
       <ImageWrapper>

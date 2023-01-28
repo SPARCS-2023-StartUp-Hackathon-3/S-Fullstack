@@ -6,12 +6,12 @@ interface IGenerateStore {
   color: string;
   desc: string;
   imageUrl: string;
-  isNew: boolean;
+  parentId: number;
   setTitle: (data: string) => void;
   setColor: (data: string) => void;
   setDesc: (data: string) => void;
   setImg: (data: string) => void;
-  setIsNew: (data: boolean) => void;
+  setParentId: (data: boolean) => void;
   resetAll: () => void;
 }
 
@@ -22,7 +22,7 @@ export const useGenerateStore = create(
       color: '',
       desc: '',
       imageUrl: '',
-      isNew: true,
+      parentId: 0,
       setTitle: (data) => {
         set((state) => ({ ...state, title: data }));
       },
@@ -35,11 +35,11 @@ export const useGenerateStore = create(
       setImg: (data) => {
         set((state) => ({ ...state, imageUrl: data }));
       },
-      setIsNew: (data) => {
+      setParentId: (data) => {
         set((state) => ({ ...state, isNew: data }));
       },
       resetAll: () => {
-        set({ title: '', color: '', desc: '', imageUrl: '', isNew: true });
+        set({ title: '', color: '', desc: '', imageUrl: '', parentId: 0 });
       },
     }),
     {

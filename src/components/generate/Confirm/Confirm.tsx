@@ -18,7 +18,7 @@ import {
 export function Confirm() {
   const router = useRouter();
 
-  const { title, color, desc, imageUrl, isNew } = useGenerateStore();
+  const { title, color, desc, imageUrl, parentId } = useGenerateStore();
 
   // todo: 보내는 데이터 확인
   const editRequest = async () => {
@@ -42,7 +42,7 @@ export function Confirm() {
   });
 
   useEffect(() => {
-    if (!isNew) {
+    if (!parentId) {
       // mutate();
     }
   }, [mutate]);
@@ -51,7 +51,7 @@ export function Confirm() {
     <ConfirmWrapper>
       <Header>
         <PrevButton onClick={router.back} />
-        {isNew ? 'Generate' : 'Redesign'}
+        {parentId ? 'Generate' : 'Redesign'}
         <CloseButton onClick={() => router.push('/')} />
       </Header>
       <ImageWrapper>
@@ -63,9 +63,9 @@ export function Confirm() {
         />
       </ImageWrapper>
       <ButtonWrapper>
-        {!isNew && <RegenerateButton>Regenerate</RegenerateButton>}
+        {!parentId && <RegenerateButton>Regenerate</RegenerateButton>}
         <CompleteButton
-          isNew={isNew}
+          parentId={parentId}
           onClick={() => router.push('/generate/last')}
         >
           Complete

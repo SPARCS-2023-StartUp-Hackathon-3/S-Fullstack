@@ -66,7 +66,7 @@ export const RegenerateButton = styled.button`
 `;
 
 export const CompleteButton = styled.button<ICompleteButtonProps>`
-  width: ${({ isNew }) => (isNew ? '160px' : '180px')};
+  width: ${({ parentId }) => (parentId ? '160px' : '180px')};
   height: 60px;
   background: #111a30;
   border-radius: 14px;
