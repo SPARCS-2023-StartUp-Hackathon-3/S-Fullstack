@@ -16,13 +16,13 @@ const User = ({ username }: UserProps) => {
     if (!top.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.intersectionRatio > 0.9) {
+        if (entry.intersectionRatio > 0.5) {
           setFoldState('expanded');
         } else {
           setFoldState('folded');
         }
       },
-      { threshold: 0.9 }
+      { threshold: 0.5 }
     );
     observer.observe(top.current);
     return () => observer.disconnect();
