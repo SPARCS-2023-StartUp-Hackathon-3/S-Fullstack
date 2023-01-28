@@ -9,6 +9,7 @@ const nextConfig = {
       'melebucket.s3.ap-northeast-2.amazonaws.com',
       'img.danawa.com',
       'upload.wikimedia.org',
+      't1.daumcdn.net',
     ],
   },
 };

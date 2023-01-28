@@ -1,9 +1,11 @@
+import { MdFavorite } from 'react-icons/md';
 import { useUserInfoStore } from '@/util/store';
 import { useQuery } from '@tanstack/react-query';
 import { UserProps } from '../types';
 import {
   AvatarExpanded,
   ExpandedUserInfoWrapper,
+  InfoWrapper,
   UsernameExpanded,
 } from './ExpandedUserInfo.style';
 
@@ -18,9 +20,27 @@ const ExpandedUserInfo = ({ username }: UserProps) => {
 
   return (
     <ExpandedUserInfoWrapper>
-      <AvatarExpanded />
+      <AvatarExpanded
+        src='https://t1.daumcdn.net/cfile/tistory/9931CB4B5D904D7607'
+        alt=''
+        width={90}
+        height={90}
+      />
       <UsernameExpanded>{username}</UsernameExpanded>
-      <div>♥ {isSuccess ? data.likeCount : 0} Likes</div>
+      <InfoWrapper>
+        <MdFavorite
+          color='#37258E'
+          style={{
+            width: '20',
+            height: 'auto',
+            position: 'relative',
+            bottom: '-4',
+            left: '-5',
+          }}
+        />
+        {isSuccess ? data.likeCount : 0}
+        <span>Likes</span>
+      </InfoWrapper>
     </ExpandedUserInfoWrapper>
   );
 };

@@ -75,6 +75,8 @@ export default async function handler(
         }
 
         const [data] = await db.query(sql, param);
+        console.log(sql);
+        console.log(param);
 
         return res.status(200).json(data);
       } catch (e: any) {

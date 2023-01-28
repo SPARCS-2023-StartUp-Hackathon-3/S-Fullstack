@@ -1,22 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface IGenerateStore {
-  title: string;
-  color: string;
-  desc: string;
-  imageUrl?: string;
-  selectImageUrls?: Array<string>;
-  parentId?: number;
-  setTitle: (data: string) => void;
-  setColor: (data: string) => void;
-  setDesc: (data: string) => void;
-  setImageUrl: (data?: string) => void;
-  setSelectImageUrls: (data: Array<string> | undefined) => void;
-  setParentId: (data: number) => void;
-  resetAll: () => void;
-}
-
 interface IUserInfoStore {
   id: number;
   username: string;
@@ -41,6 +25,22 @@ export const useUserInfoStore = create(
     }
   )
 );
+
+interface IGenerateStore {
+  title: string;
+  color: string;
+  desc: string;
+  imageUrl?: string;
+  selectImageUrls?: Array<string>;
+  parentId?: number;
+  setTitle: (data: string) => void;
+  setColor: (data: string) => void;
+  setDesc: (data: string) => void;
+  setImageUrl: (data?: string) => void;
+  setSelectImageUrls: (data: Array<string> | undefined) => void;
+  setParentId: (data: number) => void;
+  resetAll: () => void;
+}
 
 export const useGenerateStore = create(
   persist<IGenerateStore>(

@@ -17,6 +17,10 @@ export const ClothesContainer = styled.div`
   flex-wrap: wrap;
 `;
 
+export const ClothesListWrapper = styled.div`
+  background-color: #f9f9f9;
+`;
+
 export function ClothesList({ bottom }: { bottom: LegacyRef<HTMLElement> }) {
   const { sort, setSort } = useClosetSortStore();
   const page = useRef(1);
@@ -34,12 +38,12 @@ export function ClothesList({ bottom }: { bottom: LegacyRef<HTMLElement> }) {
     page.current = 1;
     setSort(value);
     setClothes([]);
-    getPosts();
+    getPosts(value);
   };
 
-  const getPosts = () => {
+  const getPosts = (value: Sort) => {
     const params =
-      sort == '최신순'
+      value == '최신순'
         ? { page: page.current, user_id: userId }
         : { page: page.current, sort_by: 'like', user_id: userId };
     axios
@@ -52,7 +56,7 @@ export function ClothesList({ bottom }: { bottom: LegacyRef<HTMLElement> }) {
       });
   };
 
-  const onIntersect = ([entry]) => entry.isIntersecting && getPosts();
+  const onIntersect = ([entry]) => entry.isIntersecting && getPosts(sort);
 
   useObserver({
     target: bottom,
@@ -60,7 +64,7 @@ export function ClothesList({ bottom }: { bottom: LegacyRef<HTMLElement> }) {
   });
 
   return (
-    <>
+    <ClothesListWrapper>
       <SortContainer sort={sort} onChange={onClickSort} />
       <ClothesContainer>
         {clothes.map((v, i) => (
@@ -79,6 +83,6 @@ export function ClothesList({ bottom }: { bottom: LegacyRef<HTMLElement> }) {
           />
         ))}
       </ClothesContainer>
-    </>
+    </ClothesListWrapper>
   );
 }

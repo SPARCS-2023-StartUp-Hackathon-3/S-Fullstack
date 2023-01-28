@@ -1,5 +1,6 @@
 import { AWS_ADDRESS } from '@/const';
 import IPostPostReqDto from '@/types/PostPost.types';
+import { useExploreListStore, useExplorePageStore } from '@/util/explore/store';
 import { useGenerateStore, useUserInfoStore } from '@/util/store';
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -19,10 +20,13 @@ import { ILastFormValue } from './Last.types';
 
 export function Last() {
   const router = useRouter();
+  const { setPage } = useExplorePageStore();
+  const { setClothes } = useExploreListStore();
 
   const { id } = useUserInfoStore();
 
-  const { title, color, desc, imageUrl, parentId } = useGenerateStore();
+  const { title, color, desc, imageUrl, parentId, setSelectImageUrls } =
+    useGenerateStore();
 
   const postHandler = async (data: IPostPostReqDto) => {
     return fetch(`/api/posts`, {
@@ -36,6 +40,9 @@ export function Last() {
 
   const { mutate } = useMutation(postHandler, {
     onSuccess: (data) => {
+      setPage(1);
+      setClothes([]);
+      setSelectImageUrls(undefined);
       router.push(`/explore/detail/${data.id}`);
     },
   });

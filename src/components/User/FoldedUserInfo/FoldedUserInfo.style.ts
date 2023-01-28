@@ -1,4 +1,5 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
+import Image from 'next/image';
 
 export const FoldedUserInfoWrapper = styled.div`
   display: flex;
@@ -11,12 +12,12 @@ export const FoldedUserInfoWrapper = styled.div`
   padding: 32px 0px 16px 0px;
 `;
 
-export const AvatarFold = styled.div`
+export const AvatarFold = styled(Image)`
   box-sizing: border-box;
-  background-color: #DEDCDF;
+  background-color: #dedcdf;
   width: 32px;
   height: 32px;
-  border: 1px solid #DEDCDF;
+  border: 1px solid #dedcdf;
   border-radius: 32px;
   flex: none;
   order: 0;

@@ -31,7 +31,7 @@ export const useClosetScrollStore = create(
     (set) => ({
       scrollY: 0,
       setScrollY: (data) => {
-        set((state) => ({ ...state, sort: data }));
+        set((state) => ({ ...state, scrollY: data }));
       },
     }),
     {

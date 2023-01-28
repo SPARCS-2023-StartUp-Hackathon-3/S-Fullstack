@@ -22,10 +22,10 @@ const Select = styled.select`
   font-weight: 600;
   color: #1c1b1f;
   margin-left: 8px;
-  margin-right: 8px;
   appearance: none;
-  width: 50px;
+  width: 40px;
   border-style: none;
+  background-color: transparent;
 `;
 
 export type Sort = '인기순' | '최신순';
@@ -46,6 +46,7 @@ export default function SortContainer({
         onChange={(e) => {
           onChange && onChange(e.target.value as Sort);
         }}
+        defaultValue={sort}
       >
         <option value='인기순'>인기순</option>
         <option value='최신순'>최신순</option>

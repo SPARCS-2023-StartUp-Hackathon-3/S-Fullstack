@@ -31,7 +31,7 @@ export const useExploreScrollStore = create(
     (set) => ({
       scrollY: 0,
       setScrollY: (data) => {
-        set((state) => ({ ...state, sort: data }));
+        set((state) => ({ ...state, scrollY: data }));
       },
     }),
     {
@@ -93,6 +93,25 @@ export const useExploreKeywordStore = create(
     }),
     {
       name: 'explore-keyword-store',
+    }
+  )
+);
+
+interface IExplorePageStore {
+  page: number;
+  setPage: (data: number) => void;
+}
+
+export const useExplorePageStore = create(
+  persist<IExplorePageStore>(
+    (set) => ({
+      page: 1,
+      setPage: (data: number) => {
+        set((state) => ({ ...state, page: data }));
+      },
+    }),
+    {
+      name: 'explore-page-store',
     }
   )
 );

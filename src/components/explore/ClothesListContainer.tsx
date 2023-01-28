@@ -2,12 +2,13 @@ import { AWS_ADDRESS } from '@/const';
 import {
   useExploreKeywordStore,
   useExploreListStore,
+  useExplorePageStore,
+  useExploreScrollStore,
   useExploreSortStore,
 } from '@/util/explore/store';
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { LegacyRef, useEffect, useRef } from 'react';
-import { useLocalStorage } from 'usehooks-ts';
+import { LegacyRef, useEffect } from 'react';
 import Clothes from './Clothes';
 import SortContainer, { Sort } from './SortContainer';
 import { useObserver } from './useObserver';
@@ -30,8 +31,8 @@ export default function ClothesListContainer({
 }: {
   bottom: LegacyRef<HTMLElement>;
 }) {
-  const page = useRef(1);
-  const [scrollY, setScrollY] = useLocalStorage('explore_list_scroll', 0);
+  const { page, setPage } = useExplorePageStore();
+  const { scrollY, setScrollY } = useExploreScrollStore();
   const { sort, setSort } = useExploreSortStore();
   const { clothes, setClothes } = useExploreListStore();
   const { keyword } = useExploreKeywordStore();
@@ -41,20 +42,21 @@ export default function ClothesListContainer({
   }, []);
 
   useEffect(() => {
-    if (clothes.length == 0 || keyword.length == 0) page.current = 1;
+    if (clothes.length == 0 && keyword.length == 0) {
+      setPage(1);
+      setClothes([]);
+    }
   }, [clothes.length, keyword]);
 
   const onClickSort = (value: Sort) => {
     setSort(value);
     setClothes([]);
-    getPosts();
+    getPosts(value);
   };
 
-  const getPosts = () => {
+  const getPosts = (value: Sort) => {
     const params =
-      sort == '최신순'
-        ? { page: page.current }
-        : { page: page.current, sort_by: 'like' };
+      value == '최신순' ? { page: page } : { page: page, sort_by: 'like' };
 
     if (keyword && keyword != '') Object.assign(params, { search: keyword });
 
@@ -65,12 +67,12 @@ export default function ClothesListContainer({
       .then((res) => {
         if (res.data.length > 0) {
           setClothes(clothes.concat(...res.data));
-          page.current += 1;
+          setPage(page + 1);
         }
       });
   };
 
-  const onIntersect = ([entry]) => entry.isIntersecting && getPosts();
+  const onIntersect = ([entry]) => entry.isIntersecting && getPosts(sort);
 
   useObserver({
     target: bottom,

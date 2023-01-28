@@ -1,6 +1,6 @@
 import { AI_ADDRESS, AWS_ADDRESS } from '@/const';
 import { useGenerateStore } from '@/util/store';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -66,7 +66,7 @@ export function Confirm() {
       //     mutate(data);
       //   });
     }
-  }, [mutate]);
+  }, [mutate, parentId]);
 
   return (
     <ConfirmWrapper>
@@ -76,7 +76,7 @@ export function Confirm() {
         <CloseButton onClick={() => router.push('/')} />
       </Header>
       <ImageWrapper>
-        {isSuccess ? (
+        {isSuccess || !parentId ? (
           <Image
             src={`${AWS_ADDRESS}/${imageUrl}`}
             alt='Clothes image'

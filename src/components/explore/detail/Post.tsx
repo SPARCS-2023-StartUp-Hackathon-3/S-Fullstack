@@ -3,8 +3,8 @@ import { useGenerateStore, useUserInfoStore } from '@/util/store';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import Image from 'next/image';
-import { Router, useRouter } from 'next/router';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { MdFavorite, MdOutlineFavoriteBorder, MdBrush } from 'react-icons/md';
 
 const Container = styled.div`
@@ -64,6 +64,7 @@ const ProfileName = styled.div`
   font-size: 14px;
   font-weight: 500;
   margin-left: 8px;
+  background-color: #fff;
 `;
 
 const Title = styled.div`
@@ -179,7 +180,7 @@ export default function Post({
   user: User;
   like: boolean;
 }) {
-  const [liked, setLiked] = useState(like);
+  const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   const { id: userId } = useUserInfoStore();
   const route = useRouter();
@@ -218,6 +219,10 @@ export default function Post({
     route.push('/generate/start');
   };
 
+  useEffect(() => {
+    setLiked(like);
+  }, [like]);
+
   return (
     <Container>
       <ImageContainer>
@@ -229,7 +234,7 @@ export default function Post({
         />
         <ProfileContainer>
           <ProfileImage
-            src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Black_colour.jpg/640px-Black_colour.jpg'
+            src='https://t1.daumcdn.net/cfile/tistory/9931CB4B5D904D7607'
             alt=''
             width={40}
             height={40}

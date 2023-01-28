@@ -4,7 +4,10 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { MdSearch, MdArrowBackIos, MdCancel } from 'react-icons/md';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useExploreSearchingStateStore } from '@/util/explore/store';
+import {
+  useExplorePageStore,
+  useExploreSearchingStateStore,
+} from '@/util/explore/store';
 
 const TopBarWrapper = styled.div`
   display: flex;
@@ -55,6 +58,7 @@ export const TopBar = ({
   const { searchingState, setSearchingState } = useExploreSearchingStateStore();
   const [queryState, setQueryState] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const { setPage } = useExplorePageStore();
 
   useEffect(() => {
     if (searchingState) {
@@ -142,6 +146,7 @@ export const TopBar = ({
                 }}
                 ref={inputRef}
                 onKeyUp={(e) => {
+                  setPage(1);
                   if (e.key == 'Enter') onEndEditing(e.currentTarget.value);
                 }}
               />
