@@ -9,7 +9,7 @@ import { useExploreSearchingStateStore } from '@/util/explore/store';
 const TopBarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10.5px 11px 10.5px 11px;
+  padding: 12px 10px 11px 20px;
   align-items: center;
   border-bottom: 1px solid #dedcdf;
   position: fixed;
@@ -90,6 +90,7 @@ export const TopBar = ({
             >
               <MdArrowBackIos
                 size={24}
+                style={{ position: 'relative', bottom: '-2', width: '20' }}
                 onClick={() => {
                   setSearchingState(false);
                   onClose();
@@ -114,7 +115,11 @@ export const TopBar = ({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
             >
-              <MdSearch size={24} onClick={() => setSearchingState(true)} />
+              <MdSearch
+                size={24}
+                style={{ position: 'relative', bottom: '-2' }}
+                onClick={() => setSearchingState(true)}
+              />
             </motion.div>
           ) : (
             <motion.div
@@ -142,6 +147,7 @@ export const TopBar = ({
               />
               <MdCancel
                 size={24}
+                color='#4B4B4D'
                 onClick={() => {
                   setQueryState('');
                   inputRef.current?.focus();

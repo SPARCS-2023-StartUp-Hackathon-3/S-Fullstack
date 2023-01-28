@@ -21,6 +21,10 @@ export const Container = styled.div`
   flex-wrap: wrap;
 `;
 
+export const ClothesListContainerWrapper = styled.div`
+  background-color: #f9f9f9;
+`;
+
 export default function ClothesListContainer({
   bottom,
 }: {
@@ -75,7 +79,7 @@ export default function ClothesListContainer({
   });
 
   return (
-    <>
+    <ClothesListContainerWrapper>
       <SortContainer sort={sort} onChange={onClickSort} />
       <Container>
         {clothes.map((v, i) => (
@@ -94,6 +98,6 @@ export default function ClothesListContainer({
           />
         ))}
       </Container>
-    </>
+    </ClothesListContainerWrapper>
   );
 }
