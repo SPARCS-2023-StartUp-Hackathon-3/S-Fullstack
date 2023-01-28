@@ -1,4 +1,5 @@
 import { useGenerateStore, useUserInfoStore } from '@/util/store';
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { ClothesList } from './ClothesList/ClothesList';
 import ExpandedUserInfo from './ExpandedUserInfo';
@@ -19,6 +20,7 @@ const User = ({ username }: UserProps) => {
   const top = useRef(null);
   const { setId, setUsername } = useUserInfoStore();
   const { resetAll } = useGenerateStore();
+  const router = useRouter();
 
   useEffect(() => {
     if (!top.current) return;
@@ -44,6 +46,7 @@ const User = ({ username }: UserProps) => {
             setId(0);
             setUsername('');
             resetAll();
+            router.push('/');
           }}
         >
           Logout
