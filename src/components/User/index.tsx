@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import ClothesListContainer from '../explore/ClothesListContainer';
-import SortContainer from '../explore/SortContainer';
+import { ClothesList } from './ClothesList/ClothesList';
 import ExpandedUserInfo from './ExpandedUserInfo';
 import FoldedUserInfo from './FoldedUserInfo';
 import { ActiveButton, InactiveButton, Buttons, UserWrapper } from './styles';
@@ -49,8 +48,7 @@ const User = ({ username }: UserProps) => {
         )}
       </UserWrapper>
       <div ref={top} style={{ height: 260 }} />
-      <SortContainer sort='인기순' />
-      <ClothesListContainer bottom={bottom} />
+      <ClothesList bottom={bottom} />
       <div ref={bottom} />
     </>
   );

@@ -33,7 +33,7 @@ export default function Clothes({
   // });
 
   return (
-    <Link href={'/'} onClick={onClick} style={style}>
+    <Link href={'/explore/detail/' + id} onClick={onClick} style={style}>
       {true && (
         <ClothesImage
           src={url}

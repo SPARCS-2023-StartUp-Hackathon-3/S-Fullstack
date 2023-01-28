@@ -1,18 +1,14 @@
+import Clothes from '@/components/explore/Clothes';
+import SortContainer, { Sort } from '@/components/explore/SortContainer';
+import { useObserver } from '@/components/explore/useObserver';
 import { AWS_ADDRESS } from '@/const';
-import {
-  useExploreKeywordStore,
-  useExploreListStore,
-  useExploreSortStore,
-} from '@/util/explore/store';
+import { useClosetScrollStore, useClosetSortStore } from '@/util/closet/store';
+import { useUserInfoStore } from '@/util/store';
 import styled from '@emotion/styled';
 import axios from 'axios';
-import { LegacyRef, useEffect, useRef } from 'react';
-import { useLocalStorage } from 'usehooks-ts';
-import Clothes from './Clothes';
-import SortContainer, { Sort } from './SortContainer';
-import { useObserver } from './useObserver';
+import { LegacyRef, useEffect, useRef, useState } from 'react';
 
-export const Container = styled.div`
+export const ClothesContainer = styled.div`
   margin-left: 9.5px;
   margin-right: 9.5px;
   padding-top: 12px;
@@ -21,26 +17,21 @@ export const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-export default function ClothesListContainer({
-  bottom,
-}: {
-  bottom: LegacyRef<HTMLElement>;
-}) {
+export function ClothesList({ bottom }: { bottom: LegacyRef<HTMLElement> }) {
+  const { sort, setSort } = useClosetSortStore();
   const page = useRef(1);
-  const [scrollY, setScrollY] = useLocalStorage('explore_list_scroll', 0);
-  const { sort, setSort } = useExploreSortStore();
-  const { clothes, setClothes } = useExploreListStore();
-  const { keyword } = useExploreKeywordStore();
+  const [clothes, setClothes] = useState<{ id: number; image_url: string }[]>(
+    []
+  );
+  const { scrollY, setScrollY } = useClosetScrollStore();
+  const { id: userId } = useUserInfoStore();
 
   useEffect(() => {
     if (scrollY !== 0) window.scrollTo(0, scrollY);
   }, []);
 
-  useEffect(() => {
-    if (clothes.length == 0 || keyword.length == 0) page.current = 1;
-  }, [clothes.length, keyword]);
-
   const onClickSort = (value: Sort) => {
+    page.current = 1;
     setSort(value);
     setClothes([]);
     getPosts();
@@ -49,23 +40,15 @@ export default function ClothesListContainer({
   const getPosts = () => {
     const params =
       sort == '최신순'
-        ? { page: page.current }
-        : { page: page.current, sort_by: 'like' };
-
-    if (keyword && keyword != '') Object.assign(params, { search: keyword });
-
-    console.log(params, keyword);
-
+        ? { page: page.current, user_id: userId }
+        : { page: page.current, sort_by: 'like', user_id: userId };
     axios
       .get('/api/posts', {
         params: params,
       })
       .then((res) => {
-        console.log(res.data);
-        if (res.data.length > 0) {
-          setClothes(clothes.concat(...res.data));
-          page.current += 1;
-        }
+        setClothes((prev) => prev.concat(...res.data));
+        page.current += 1;
       });
   };
 
@@ -74,13 +57,12 @@ export default function ClothesListContainer({
   useObserver({
     target: bottom,
     onIntersect,
-    dependencies: { keyword, clothes },
   });
 
   return (
     <>
       <SortContainer sort={sort} onChange={onClickSort} />
-      <Container>
+      <ClothesContainer>
         {clothes.map((v, i) => (
           <Clothes
             url={v.image_url ? AWS_ADDRESS + '/' + v.image_url : ''}
@@ -96,7 +78,7 @@ export default function ClothesListContainer({
             }}
           />
         ))}
-      </Container>
+      </ClothesContainer>
     </>
   );
 }

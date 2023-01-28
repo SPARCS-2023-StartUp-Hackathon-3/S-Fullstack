@@ -9,6 +9,7 @@ const Container = styled.div`
   align-items: center;
   padding-right: 16px;
   padding-top: 17px;
+  cursor: pointer;
 `;
 
 const Icon = styled(MdSort)`
@@ -16,21 +17,39 @@ const Icon = styled(MdSort)`
   height: 18px;
 `;
 
-const Text = styled.div`
+const Select = styled.select`
   font-size: 14px;
   font-weight: 600;
   color: #1c1b1f;
   margin-left: 8px;
   margin-right: 8px;
+  appearance: none;
+  width: 50px;
+  border-style: none;
 `;
 
-type Sort = '인기순' | '최신순';
+export type Sort = '인기순' | '최신순';
 
-export default function SortContainer({ sort }: { sort: Sort }) {
+export default function SortContainer({
+  sort,
+  onChange,
+}: {
+  sort: Sort;
+  onChange?: (v: Sort) => void;
+}) {
   return (
     <Container>
       <Icon color='#1C1B1F' />
-      <Text>{sort}</Text>
+      <Select
+        name='sort'
+        id='sort-select'
+        onChange={(e) => {
+          onChange && onChange(e.target.value as Sort);
+        }}
+      >
+        <option value='인기순'>인기순</option>
+        <option value='최신순'>최신순</option>
+      </Select>
     </Container>
   );
 }

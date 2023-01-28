@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { MdSearch, MdArrowBackIos, MdCancel } from 'react-icons/md';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useExploreSearchingStateStore } from '@/util/explore/store';
+
 const TopBarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -43,9 +45,15 @@ const TransparentInput = styled.input`
   }
 `;
 
-export const TopBar = () => {
-  const [searchingState, setSearchingState] = useState<boolean>(false);
-  const [queryState, setQueryState] = useState<string>('');
+export const TopBar = ({
+  onEndEditing,
+  onClose,
+}: {
+  onEndEditing: (v: string) => void;
+  onClose: () => void;
+}) => {
+  const { searchingState, setSearchingState } = useExploreSearchingStateStore();
+  const [queryState, setQueryState] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -82,7 +90,10 @@ export const TopBar = () => {
             >
               <MdArrowBackIos
                 size={24}
-                onClick={() => setSearchingState(false)}
+                onClick={() => {
+                  setSearchingState(false);
+                  onClose();
+                }}
               />
             </motion.div>
           )}
@@ -125,6 +136,9 @@ export const TopBar = () => {
                   setQueryState(inputRef.current?.value || '');
                 }}
                 ref={inputRef}
+                onKeyUp={(e) => {
+                  if (e.key == 'Enter') onEndEditing(e.currentTarget.value);
+                }}
               />
               <MdCancel
                 size={24}
