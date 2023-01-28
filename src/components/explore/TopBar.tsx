@@ -142,11 +142,11 @@ export const TopBar = ({
               <TransparentInput
                 value={queryState}
                 onChange={() => {
+                  setPage(1);
                   setQueryState(inputRef.current?.value || '');
                 }}
                 ref={inputRef}
                 onKeyUp={(e) => {
-                  setPage(1);
                   if (e.key == 'Enter') onEndEditing(e.currentTarget.value);
                 }}
               />
