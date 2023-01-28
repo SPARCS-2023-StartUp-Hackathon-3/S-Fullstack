@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const UserWrapper = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ export const UserWrapper = styled.div`
   margin: 0px;
   padding: 0px;
   position: fixed;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 `;
 
 export const FoldedUserInfo = styled.div`
@@ -37,12 +37,12 @@ export const ActiveButton = styled.button`
   width: 110px;
   height: 42px;
   border-radius: 42px;
-  background: #111A30;
-  color : #FFFFFF;
+  background: #111a30;
+  color: #ffffff;
   flex: none;
   order: 0;
   flex-grow: 0;
-  border: 1px solid #111A30;
+  border: 1px solid #111a30;
   margin: 0px 5px 0px 5px;
 `;
 
@@ -50,10 +50,21 @@ export const InactiveButton = styled.button`
   width: 110px;
   height: 42px;
   border-radius: 42px;
-  border: 1px solid #111A30;
-  color: #111A30;
-  background: #FFFFFF;
+  border: 1px solid #111a30;
+  color: #111a30;
+  background: #ffffff;
   flex: none;
   order: 0;
   flex-grow: 0;
+`;
+
+export const LogoutButton = styled.button`
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background-color: #fff;
+  border: 1px solid #111a30;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 12px;
 `;

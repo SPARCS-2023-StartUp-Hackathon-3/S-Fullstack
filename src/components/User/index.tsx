@@ -1,8 +1,15 @@
+import { useGenerateStore, useUserInfoStore } from '@/util/store';
 import { useEffect, useRef, useState } from 'react';
 import { ClothesList } from './ClothesList/ClothesList';
 import ExpandedUserInfo from './ExpandedUserInfo';
 import FoldedUserInfo from './FoldedUserInfo';
-import { ActiveButton, InactiveButton, Buttons, UserWrapper } from './styles';
+import {
+  ActiveButton,
+  InactiveButton,
+  Buttons,
+  UserWrapper,
+  LogoutButton,
+} from './styles';
 import { UserProps, Tabs, Folding } from './types';
 
 const User = ({ username }: UserProps) => {
@@ -10,6 +17,8 @@ const User = ({ username }: UserProps) => {
   const [foldState, setFoldState] = useState<Folding>('folded');
   const bottom = useRef(null);
   const top = useRef(null);
+  const { setId, setUsername } = useUserInfoStore();
+  const { resetAll } = useGenerateStore();
 
   useEffect(() => {
     if (!top.current) return;
@@ -30,6 +39,15 @@ const User = ({ username }: UserProps) => {
   return (
     <>
       <UserWrapper>
+        <LogoutButton
+          onClick={() => {
+            setId(0);
+            setUsername('');
+            resetAll();
+          }}
+        >
+          Logout
+        </LogoutButton>
         {foldState === 'expanded' ? (
           <ExpandedUserInfo username={username} />
         ) : foldState === 'folded' ? (
