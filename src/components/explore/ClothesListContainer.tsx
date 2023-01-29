@@ -43,13 +43,13 @@ export default function ClothesListContainer({
 
   useEffect(() => {
     if (clothes.length == 0 && keyword.length == 0) {
-      setPage(1);
-      setClothes([]);
+      if (page != 1) setPage(1);
     }
   }, [clothes.length, keyword]);
 
   const onClickSort = (value: Sort) => {
     setSort(value);
+    setPage(1);
     setClothes([]);
     getPosts(value);
   };
@@ -77,7 +77,7 @@ export default function ClothesListContainer({
   useObserver({
     target: bottom,
     onIntersect,
-    dependencies: { keyword, clothes },
+    dependencies: { keyword, clothes, page },
   });
 
   return (
