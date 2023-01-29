@@ -4,10 +4,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { MdSearch, MdArrowBackIos, MdCancel } from 'react-icons/md';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  useExplorePageStore,
-  useExploreSearchingStateStore,
-} from '@/util/explore/store';
+import { useExploreSearchingStateStore } from '@/util/explore/store';
 
 const TopBarWrapper = styled.div`
   display: flex;
@@ -58,7 +55,6 @@ export const TopBar = ({
   const { searchingState, setSearchingState } = useExploreSearchingStateStore();
   const [queryState, setQueryState] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const { setPage } = useExplorePageStore();
 
   useEffect(() => {
     if (searchingState) {
@@ -142,7 +138,6 @@ export const TopBar = ({
               <TransparentInput
                 value={queryState}
                 onChange={() => {
-                  setPage(1);
                   setQueryState(inputRef.current?.value || '');
                 }}
                 ref={inputRef}
