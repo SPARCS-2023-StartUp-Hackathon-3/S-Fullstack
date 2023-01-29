@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { MdArrowBackIos } from 'react-icons/md';
+import { MdHome } from 'react-icons/md';
 
 const Container = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const Icon = styled(MdArrowBackIos)`
+const Icon = styled(MdHome)`
   width: 24px;
   height: 24px;
 `;
@@ -27,7 +27,7 @@ export default function DetailPageHeader() {
 
   return (
     <Container>
-      <Icon onClick={router.back} color='#050505' />
+      <Icon onClick={() => router.push('/')} color='#050505' />
     </Container>
   );
 }
