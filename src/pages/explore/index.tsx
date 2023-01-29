@@ -26,9 +26,9 @@ export default function Explore() {
   return (
     <ForceCsr>
       <TopBar onEndEditing={onEndEditing} onClose={onClose} />
-      <div style={{ height: '56px' }} />
+      <div style={{ height: '56px', backgroundColor: '#F9F9F9' }} />
       <ClothesListContainer bottom={bottom} />
-      <div style={{ height: '120px' }} />
+      <div style={{ height: '120px', backgroundColor: '#F9F9F9' }} />
       <div ref={bottom} />
       <BottomTabsNavigator />
     </ForceCsr>

@@ -68,8 +68,9 @@ const User = ({ username }: UserProps) => {
           </Buttons>
         )}
       </UserWrapper>
-      <div ref={top} style={{ height: 260 }} />
+      <div ref={top} style={{ height: 260, backgroundColor: '#F9F9F9' }} />
       <ClothesList bottom={bottom} />
+      <div style={{ height: '120px', backgroundColor: '#F9F9F9' }} />
       <div ref={bottom} />
     </>
   );
