@@ -65,6 +65,8 @@ const ProfileName = styled.div`
   font-weight: 500;
   margin-left: 8px;
   background-color: #fff;
+  border-radius: 5px;
+  padding: 1px 2px;
 `;
 
 const Title = styled.div`
