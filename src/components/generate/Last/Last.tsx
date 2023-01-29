@@ -5,6 +5,7 @@ import { useGenerateStore, useUserInfoStore } from '@/util/store';
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   CloseButton,
@@ -22,6 +23,7 @@ export function Last() {
   const router = useRouter();
   const { setPage } = useExplorePageStore();
   const { setClothes } = useExploreListStore();
+  const [disable, setDisable] = useState(false);
 
   const { id } = useUserInfoStore();
 
@@ -83,7 +85,9 @@ export function Last() {
           placeholder='Write a catpion'
           {...register('caption')}
         />
-        <PostButton>Post</PostButton>
+        <PostButton disabled={disable} onClick={() => setDisable(true)}>
+          Post
+        </PostButton>
       </Form>
     </LastWarpper>
   );
