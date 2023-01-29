@@ -63,6 +63,12 @@ export const RegenerateButton = styled.button`
   font-size: 20px;
   line-height: 22px;
   color: #111a30;
+
+  &:disabled {
+    background: #c8c6c8;
+    color: #9a9b9d;
+    border: none;
+  }
 `;
 
 export const CompleteButton = styled.button<ICompleteButtonProps>`
@@ -75,4 +81,9 @@ export const CompleteButton = styled.button<ICompleteButtonProps>`
   line-height: 22px;
   color: #ffffff;
   border: none;
+
+  &:disabled {
+    background: #c8c6c8;
+    color: #9a9b9d;
+  }
 `;

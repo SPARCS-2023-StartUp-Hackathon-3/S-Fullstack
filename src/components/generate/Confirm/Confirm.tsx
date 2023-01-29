@@ -15,13 +15,17 @@ import {
   RegenerateButton,
 } from './Confirm.styles';
 
+import * as LottieData from '@/../public/ai-loading.json';
+import Lottie from 'lottie-react';
+
 export function Confirm() {
   const router = useRouter();
 
-  const { title, color, desc, imageUrl, setImageUrl, parentId } =
+  const { title, color, desc, imageUrl, setImageUrl, parentId, resetAll } =
     useGenerateStore();
 
   const RegenerateHandler = () => {
+    setImageUrl(undefined);
     fetch(`/api/posts/${parentId}`)
       .then((res) => res.json())
       .then((data) => {
@@ -30,28 +34,31 @@ export function Confirm() {
   };
 
   const editRequest = async (data) => {
+    const req = {
+      image: data.image_url,
+      source: {
+        title: data.title,
+        color: data.color,
+        desc: data.desc,
+      },
+      target: {
+        title,
+        color,
+        desc,
+      },
+    };
+    console.log(req);
+
     return fetch(`${AI_ADDRESS}/v2/edit`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        image: data.image_url,
-        source: {
-          title: data.title,
-          color: data.color,
-          desc: data.desc,
-        },
-        target: {
-          title,
-          color,
-          desc,
-        },
-      }),
+      body: JSON.stringify(req),
     }).then((res) => res.json());
   };
 
-  const { mutate, isSuccess } = useMutation(editRequest, {
+  const { mutate, isSuccess, isLoading } = useMutation(editRequest, {
     onSuccess: (data) => {
       setImageUrl(data.images[0]);
     },
@@ -59,12 +66,12 @@ export function Confirm() {
 
   useEffect(() => {
     if (parentId) {
-      // setImageUrl(undefined); // todo: 지원님께 여쭤보기
-      // fetch(`/api/posts/${parentId}`)
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     mutate(data);
-      //   });
+      setImageUrl(undefined); // todo: 지원님께 여쭤보기
+      fetch(`/api/posts/${parentId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          mutate(data);
+        });
     }
   }, [mutate, parentId]);
 
@@ -73,10 +80,15 @@ export function Confirm() {
       <Header>
         <PrevButton onClick={router.back} />
         {parentId ? 'Redesign' : 'Generate'}
-        <CloseButton onClick={() => router.push('/')} />
+        <CloseButton
+          onClick={() => {
+            resetAll();
+            router.push('/');
+          }}
+        />
       </Header>
       <ImageWrapper>
-        {isSuccess || !parentId ? (
+        {imageUrl || !parentId ? (
           <Image
             src={`${AWS_ADDRESS}/${imageUrl}`}
             alt='Clothes image'
@@ -84,18 +96,22 @@ export function Confirm() {
             height={267}
           />
         ) : (
-          <>loading</>
+          <Lottie animationData={LottieData} />
         )}
       </ImageWrapper>
       <ButtonWrapper>
         {parentId ? (
-          <RegenerateButton onClick={RegenerateHandler}>
+          <RegenerateButton
+            disabled={imageUrl === undefined}
+            onClick={RegenerateHandler}
+          >
             Regenerate
           </RegenerateButton>
         ) : (
           <></>
         )}
         <CompleteButton
+          disabled={imageUrl === undefined}
           parentId={parentId ? parentId : undefined}
           onClick={() => router.push('/generate/last')}
         >

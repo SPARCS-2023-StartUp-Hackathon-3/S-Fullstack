@@ -97,3 +97,10 @@ export const SelectButton = styled.button`
     color: #9a9b9d;
   }
 `;
+
+export const LottieWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;

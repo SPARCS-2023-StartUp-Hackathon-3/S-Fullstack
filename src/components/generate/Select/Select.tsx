@@ -5,6 +5,7 @@ import {
   CloseButton,
   Header,
   ImageBox,
+  LottieWrapper,
   PrevButton,
   RegenerateButton,
   SelectBox,
@@ -15,6 +16,8 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { AI_ADDRESS, AWS_ADDRESS } from '@/const';
 import { useEffect } from 'react';
+import * as LottieData from '@/../public/ai-loading.json';
+import Lottie from 'lottie-react';
 
 export function Select() {
   const router = useRouter();
@@ -89,7 +92,9 @@ export function Select() {
             ))}
           </ImageBox>
         ) : (
-          <>loading</>
+          <LottieWrapper>
+            <Lottie animationData={LottieData} />
+          </LottieWrapper>
         )}
       </SelectBox>
       <ButtonBox>
