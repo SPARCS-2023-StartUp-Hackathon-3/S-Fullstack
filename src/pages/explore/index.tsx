@@ -5,6 +5,7 @@ import { ForceCsr } from '@/components/ForceCsr';
 import {
   useExploreKeywordStore,
   useExploreListStore,
+  useExplorePageStore,
 } from '@/util/explore/store';
 import { useRef } from 'react';
 
@@ -12,8 +13,10 @@ export default function Explore() {
   const bottom = useRef(null);
   const { setKeyword } = useExploreKeywordStore();
   const { setClothes } = useExploreListStore();
+  const { setPage } = useExplorePageStore();
 
   const onEndEditing = (value: string) => {
+    setPage(1);
     setKeyword(value);
     setClothes([]);
   };
