@@ -1,4 +1,4 @@
-#  SPARCS-2023-StartUp-Hackathon-3
+# SPARCS-2023-StartUp-Hackathon-3 금상(1위)
 # [TEAM S] S-Fullstack
 
 다음과 같은 기능이 포함되어 있습니다.
