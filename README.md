@@ -1,3 +1,4 @@
+#  SPARCS-2023-StartUp-Hackathon-3
 # [TEAM S] S-Fullstack
 
 다음과 같은 기능이 포함되어 있습니다.
