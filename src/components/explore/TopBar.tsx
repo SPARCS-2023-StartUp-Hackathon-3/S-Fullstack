@@ -14,6 +14,7 @@ const TopBarWrapper = styled.div`
   border-bottom: 1px solid #dedcdf;
   position: fixed;
   width: 100%;
+  /* max-width: 375px; */
   background-color: #fff;
 `;
 
