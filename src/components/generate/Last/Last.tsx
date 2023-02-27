@@ -52,6 +52,7 @@ export function Last() {
   const { register, handleSubmit } = useForm<ILastFormValue>();
 
   const onSubmitHandler: SubmitHandler<ILastFormValue> = (data) => {
+    setDisable(true);
     mutate({
       imageUrl,
       title,
@@ -85,9 +86,7 @@ export function Last() {
           placeholder='Write a catpion'
           {...register('caption')}
         />
-        <PostButton disabled={disable} onClick={() => setDisable(true)}>
-          Post
-        </PostButton>
+        <PostButton disabled={disable}>Post</PostButton>
       </Form>
     </LastWarpper>
   );

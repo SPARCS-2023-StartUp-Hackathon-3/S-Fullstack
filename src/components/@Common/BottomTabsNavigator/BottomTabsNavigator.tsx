@@ -11,6 +11,7 @@ const Container = styled.div`
   border-top-right-radius: 32px;
   border-top-left-radius: 32px;
   width: 100%;
+  /* max-width: 375px; */
   height: 80px;
   box-shadow: 0px -7px 9px rgba(145, 152, 208, 0.16);
   display: flex;

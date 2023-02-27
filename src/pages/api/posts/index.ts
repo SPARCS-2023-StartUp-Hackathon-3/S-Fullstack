@@ -53,10 +53,12 @@ export default async function handler(
         const sql =
           'SELECT * FROM `post` ' +
           (mode === 'user_search'
-            ? 'WHERE `user_id`=? AND `desc` LIKE ? '
+            ? 'WHERE `user_id`=? AND `desc` LIKE ? OR `title` LIKE ? OR `color` LIKE ? '
             : '') +
           (mode === 'user' ? 'WHERE `user_id`=? ' : '') +
-          (mode === 'search' ? 'WHERE `desc` LIKE ? ' : '') +
+          (mode === 'search'
+            ? 'WHERE `desc` LIKE ? OR `title` LIKE ? OR `color` LIKE ? '
+            : '') +
           'ORDER BY ' +
           (sort_by ? '`like_count` DESC, ' : '') +
           '`id` DESC LIMIT ' +
@@ -67,11 +69,11 @@ export default async function handler(
 
         if (mode === 'user_search') {
           param.push(user_id);
-          param.push(`%${search}%`);
+          param.push(`%${search}%`, `%${search}%`, `%${search}%`);
         } else if (mode === 'user') {
           param.push(user_id);
         } else if (mode === 'search') {
-          param.push(`%${search}%`);
+          param.push(`%${search}%`, `%${search}%`, `%${search}%`);
         }
 
         const [data] = await db.query(sql, param);
